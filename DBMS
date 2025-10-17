@@ -1,0 +1,455 @@
+-- Student Table
+CREATE TABLE Student (
+    StudentId int PRIMARY KEY,
+    StudentName VARCHAR (20) NOT NULL,
+    Address1 VARCHAR (20),
+    Gender VARCHAR (15),
+    Course VARCHAR (8)
+);
+
+-- Course Table
+CREATE TABLE Course (
+    DeptNo int ,
+    Dname VARCHAR (20) PRIMARY KEY,
+    Location VARCHAR (10)
+);
+
+-- Insert into Student
+INSERT INTO Student VALUES (7369, 'Vishu Singhal', 'Govindpuri', 'Male', 'BCA');
+INSERT INTO Student VALUES (7777, 'Ramesh Chand', 'Chennai', 'Male', 'MCA');
+INSERT INTO Student VALUES (2233, 'Suman Sharma', 'Delhi', 'Female', 'BBA');
+INSERT INTO Student VALUES (8899, 'Sunil Kumar', 'Jaipur', 'Male', 'MCA');
+INSERT INTO Student VALUES (4455, 'Neha Verma', 'Mumbai', 'Female', NULL);
+
+-- Insert into Course
+INSERT INTO Course VALUES (10, 'BCA', 'Delhi');
+INSERT INTO Course VALUES (20, 'MCA', 'Chennai');
+INSERT INTO Course VALUES (30, 'BBA', 'Jaipur');
+INSERT INTO Course VALUES (40, 'MBA', 'Mumbai');
+INSERT INTO Course VALUES (50, 'B.Tech', 'Bangalore');
+
+SELECT * FROM Student;
+
+
+Output:
+
+StudentId   StudentName          Address1             Gender          Course
+---
+       2233 Suman Sharma         Delhi                Female          BBA
+       4455 Neha Verma           Mumbai               Female          NULL
+       7369 Vishu Singhal        Govindpuri           Male            BCA
+       7777 Ramesh Chand         Chennai              Male            MCA
+       8899 Sunil Kumar          Jaipur               Male            MCA
+
+
+SELECT StudentId, Course FROM Student;
+
+
+Output:
+
+StudentId   Course
+---
+       2233 BBA
+       4455 NULL
+       7369 BCA
+       7777 MCA
+       8899 MCA
+
+
+SELECT Dname, Location FROM Course;
+
+
+Output:
+
+Dname                Location
+---
+BCA                  Delhi
+MCA                  Chennai
+BBA                  Jaipur
+MBA                  Mumbai
+B.Tech               Bangalore
+
+
+SELECT * FROM Student WHERE Course = 'MCA';
+
+
+Output:
+
+StudentId   StudentName          Address1             Gender          Course
+---
+       7777 Ramesh Chand         Chennai              Male            MCA
+       8899 Sunil Kumar          Jaipur               Male            MCA
+
+
+SELECT StudentName FROM Student WHERE StudentId IN (7369, 7777, 2233);
+
+
+Output:
+
+StudentName
+---
+Suman Sharma
+Vishu Singhal
+Ramesh Chand
+
+
+SELECT s.StudentName
+FROM Student s
+JOIN Course c ON s.Course = c.Dname
+WHERE c.DeptNo NOT IN (10, 40);
+
+
+Output:
+
+StudentName
+---
+Suman Sharma
+Ramesh Chand
+Sunil Kumar
+
+
+SELECT StudentName FROM Student WHERE Course IS NULL;
+
+
+Output:
+
+StudentName
+---
+Neha Verma
+
+
+SELECT StudentName FROM Student WHERE StudentName LIKE 'S%';
+
+
+Output:
+
+StudentName
+---
+Suman Sharma
+Sunil Kumar
+
+
+SELECT StudentName FROM Student WHERE StudentName LIKE '%s';
+
+
+Output:
+
+StudentName
+---
+
+
+SELECT StudentName FROM Student WHERE StudentName LIKE '%s';
+
+
+Output:
+
+StudentName
+---
+
+
+SELECT 10+5 AS Addition,
+       30-5 AS Subtraction,
+       90*5 AS Multiplication,
+       80/5 AS Division
+FROM Course;
+
+
+Output:
+
+Addition    Subtraction Multiplication Division
+---
+         15          25            450          16
+         15          25            450          16
+         15          25            450          16
+         15          25            450          16
+         15          25            450          16
+
+
+-- Add fee column (if needed)
+ALTER TABLE Course ADD Fee int;
+
+-- Example Update
+UPDATE Course SET Fee = 30000 WHERE Dname='BCA';
+UPDATE Course SET Fee = 40000 WHERE Dname='MCA';
+UPDATE Course SET Fee = 25000 WHERE Dname='BBA';
+UPDATE Course SET Fee = 50000 WHERE Dname='MBA';
+UPDATE Course SET Fee = 60000 WHERE Dname='B.Tech';
+
+-- Query
+SELECT s.StudentName, c.Fee, (c.Fee*0.10) AS Scholarship
+FROM Student s
+JOIN Course c ON s.Course = c.Dname;
+
+
+
+Output:
+
+StudentName          Fee         Scholarship
+---
+Vishu Singhal              30000         3000.00
+Ramesh Chand               40000         4000.00
+Sunil Kumar                40000         4000.00
+Suman Sharma               25000         2500.00
+
+
+SELECT StudentName FROM Student WHERE StudentName LIKE '_k%';
+
+
+Output:
+
+StudentName
+---
+
+
+SELECT StudentName FROM Student s
+LEFT JOIN Course c ON s.Course = c.Dname
+WHERE c.DeptNo IS NULL;
+
+
+Output:
+
+StudentName
+---
+Neha Verma
+
+
+SELECT * FROM Student ORDER BY Course ASC;
+
+
+Output:
+
+StudentId   StudentName          Address1             Gender          Course
+---
+       4455 Neha Verma           Mumbai               Female          NULL
+       2233 Suman Sharma         Delhi                Female          BBA
+       7369 Vishu Singhal        Govindpuri           Male            BCA
+       7777 Ramesh Chand         Chennai              Male            MCA
+       8899 Sunil Kumar          Jaipur               Male            MCA
+
+
+
+SELECT COUNT(*) FROM Student WHERE Course='BCA';
+
+
+Output:
+
+ 
+---
+          1
+
+
+SELECT COUNT(*) FROM Student;
+
+
+Output:
+
+ 
+---
+          5
+
+
+
+CREATE TABLE Department (
+    DeptId INT PRIMARY KEY,
+    DeptName VARCHAR(30)
+);
+
+CREATE TABLE Teacher (
+    TeacherId int NOT NULL,
+    TeacherName VARCHAR(20) NOT NULL,
+    Subject VARCHAR(15) NOT NULL
+);
+
+
+Output:
+
+Program did not output anything!
+
+
+
+ALTER TABLE Student
+ADD CONSTRAINT fk_course FOREIGN KEY (Course) REFERENCES Course(Dname);
+
+
+Output:
+
+Program did not output anything!
+
+
+
+CREATE TABLE Library (
+    BookId int PRIMARY KEY,
+    ISBN VARCHAR(20) UNIQUE,
+    Title VARCHAR(10)
+);
+
+
+Output:
+
+Program did not output anything!
+
+
+
+SELECT DISTINCT s.StudentName
+FROM Student s
+JOIN Course c ON s.Course = c.Dname
+WHERE c.DeptNo IN (1,2);
+
+
+Output:
+
+StudentName
+---
+
+
+SELECT StudentName, Course FROM Student ORDER BY Course;
+
+
+Output:
+
+StudentName          Course
+---
+Neha Verma           NULL
+Suman Sharma         BBA
+Vishu Singhal        BCA
+Ramesh Chand         MCA
+Sunil Kumar          MCA
+
+
+Q2
+
+-- CUSTOMER Table
+CREATE TABLE Customer (
+    SID int PRIMARY KEY,
+    Last_Name VARCHAR(15),
+    First_Name VARCHAR(15)
+);
+
+-- ORDERS Table
+CREATE TABLE Orders (
+    Order_ID int PRIMARY KEY,
+    Order_Date DATE,
+    Customer_SID int,
+    Amount int CHECK (Amount > 20000),
+    CONSTRAINT fk_customer FOREIGN KEY (Customer_SID) REFERENCES Customer(SID)
+);
+
+
+
+Output:
+
+Program did not output anything!
+
+
+
+-- Insert into CUSTOMER
+INSERT INTO Customer VALUES (101, 'Singh', 'Vishu');
+INSERT INTO Customer VALUES (102, 'Sharma', 'Neha');
+INSERT INTO Customer VALUES (103, 'Verma', 'Ramesh');
+INSERT INTO Customer VALUES (104, 'Kumar', 'Suresh');
+INSERT INTO Customer VALUES (105, 'Thomas', 'Anil');
+
+-- Insert into ORDERS
+INSERT INTO Orders VALUES (201,'2025-01-10', 101, 25000);
+INSERT INTO Orders VALUES (202,'2025-02-15', 102, 30000);
+INSERT INTO Orders VALUES (203,'2025-03-20', 103, 22000);
+INSERT INTO Orders VALUES (204,'2025-04-05', 104, 28000);
+INSERT INTO Orders VALUES (205,'2025-05-12', 105, 35000);
+
+
+Output:
+
+Program did not output anything!
+
+
+SELECT c.SID, c.First_Name, c.Last_Name, o.Amount
+FROM Customer c
+JOIN Orders o ON c.SID = o.Customer_SID;
+
+
+Output:
+
+SID         First_Name      Last_Name       Amount
+---
+        101 Vishu           Singh                 25000
+        102 Neha            Sharma                30000
+        103 Ramesh          Verma                 22000
+        104 Suresh          Kumar                 28000
+        105 Anil            Thomas                35000
+
+
+SELECT * FROM Customer
+WHERE First_Name LIKE '%s' OR Last_Name LIKE '%s';
+
+
+Output:
+
+SID         Last_Name       First_Name
+---
+        105 Thomas          Anil
+
+
+SELECT * FROM Orders WHERE Amount BETWEEN 21000 AND 30000;
+
+
+Output:
+
+Order_ID    Order_Date       Customer_SID Amount
+---
+        201       2025-01-10          101       25000
+        202       2025-02-15          102       30000
+        203       2025-03-20          103       22000
+        204       2025-04-05          104       28000
+
+
+SELECT Order_ID, (Amount + 500) AS "New Amount" FROM Orders;
+
+
+Output:
+
+Order_ID    New Amount
+---
+        201       25500
+        202       30500
+        203       22500
+        204       28500
+        205       35500
+
+
+SELECT Order_ID, Amount AS Total_Amount FROM Orders;
+
+
+Output:
+
+Order_ID    Total_Amount
+---
+        201        25000
+        202        30000
+        203        22000
+        204        28000
+        205        35000
+
+
+SELECT SUM(Amount) AS Total_Orders
+FROM Orders
+WHERE Amount > 15000;
+
+
+Output:
+
+Total_Orders
+---
+      140000
+
+
+SELECT * FROM Customer WHERE SID = 104
+UNION
+SELECT * FROM Customer WHERE SID = 105;
+
+
+Output:
+
+SID         Last_Name       First_Name
+---
+        104 Kumar           Suresh
+        105 Thomas          Anil
